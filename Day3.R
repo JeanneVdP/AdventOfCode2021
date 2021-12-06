@@ -3,6 +3,10 @@ rm(list=ls())
 fileDay3 <- 'C:/Users/van de Put/Documents/AdventOfCode2021/InputDay3.txt'
 diagnosticReport <- readLines(fileDay3)
 
+##########
+# part 1 #
+##########
+
 nPositions <- nchar(diagnosticReport[1])
 nInputs <- length(diagnosticReport)
 
@@ -54,4 +58,10 @@ getRateFromBinary <- function(binaryRow){
 gammaRate <- getRateFromBinary(binaryRates[1,]) 
 epsilonRate <- getRateFromBinary(binaryRates[2,]) 
 
+#final answer
 gammaRate * epsilonRate
+
+
+##########
+# part 2 #
+##########

@@ -36,6 +36,9 @@ sum(results, na.rm = TRUE)
 ##########
 # part 2 #
 ##########
+
+#W.I.P!!
+
 threeWindowMeasurementMatrix <- matrix(0, nrow = length(depthMeasurements), ncol = 4)
 
 fillThreeWindowMatrix <- function(winMat){
