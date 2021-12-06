@@ -49,7 +49,7 @@ fillThreeWindowMatrix <- function(winMat){
   }
 }
 
-#TIP: use matrix multiplication!!
+#TIP: %*%!!!
 
 threeWindowMeasurements <- depthMeasurements %*% threeWindowMeasurementMatrix 
 
