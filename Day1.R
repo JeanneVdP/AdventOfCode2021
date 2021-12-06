@@ -49,8 +49,6 @@ fillThreeWindowMatrix <- function(winMat){
   }
 }
 
-#TIP: %*%!!!
-
-threeWindowMeasurements <- depthMeasurements %*% threeWindowMeasurementMatrix 
+#TIP: do not use matrix multiplication %*%!!!
 
 indexesToExclude <- which(rowsum(threeWindowMeasurementMatrix) != 3)
