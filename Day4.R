@@ -1,5 +1,7 @@
 rm(list = ls())
 
+library(purrr)
+
 boards <- read.csv('C:/Users/van de Put/Documents/AdventOfCode2021/InputDay4_boards.txt', 
                    sep = "", header = FALSE, strip.white = TRUE, blank.lines.skip = TRUE)
 
@@ -9,7 +11,7 @@ numbersDrawn <- as.integer(read.table('C:/Users/van de Put/Documents/AdventOfCod
 boardSizeHorizontal <- 5
 boardSizeVertical <- 5
 
-nBoards <- length(numbersDrawn) #coincidentally also the total amount of bingo cards
+nBoards <- length(numbersDrawn)
 
 scoreBoard <- matrix(0, nrow = nrow(boards), ncol = ncol(boards))
 
@@ -20,29 +22,42 @@ isBingo <- function(scoreIndicatorCard){
 
 bingoNumbers <- integer(100)
 
-for (i in 1:nBoards){
-  
-  browser()
-  
-  saveNumber <- 0
-  
-  while(!isBingo(scoreBoard[1*i : 5*i, ])){
+determineWhenBingo <- function(bingoBoards, nBoards, indicatorScoreBoard, allNumbersDrawn){
     
-    for (j in 1:boardSizeHorizontal){
-      currentNumber <- numbersDrawn[i]
+   browser()
+    
+    for (board in 1:nBoards){
       
-      indexNumber <- which(boards[1*i : 5*1, ] == currentNumber)
-      
-      if (length(indexNumber == 1)){
-        scoreBoard[1*i : 5*1, indexNumber] <- 1
+      for (n in 1:length(allNumbersDrawn)){
+        currentNumber <- allNumbersDrawn[n]
+        
+        for (index in 1:ncol(bingoBoards)){
+          indexNumber <- which(bingoBoards[index, ] == currentNumber)
+          
+          if (length(indexNumber) >= 1) {
+            indicatorScoreBoard[board * index, indexNumber] <-  1
+          }
+        }
+        
+        if(isBingo(scoreBoard[(board * 1) : (board * 5), ])){
+          bingoNumbers[board] <- n # save index of drawn numbers to determine when board had bingo
+          
+          break;
+        }
       }
     }
     
-    saveNumber <- currentNumber
-  }
-  
-  bingoNumbers[i] <- saveNumber
+  #browser()
+    return(bingoNumbers)
 }
+
+testboards <- boards[1:10, ]
+testScoreBoard <- scoreBoard[1:10, ]
+
+resultingNumbers <- determineWhenBingo(testboards, 2, testScoreBoard, numbersDrawn)
+
+
+bingoNumbers
 
 #which min gebruiken voor bepalen laatste bingonummer
 

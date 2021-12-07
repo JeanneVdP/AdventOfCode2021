@@ -37,8 +37,26 @@ sum(results, na.rm = TRUE)
 # part 2 #
 ##########
 
-#W.I.P!!
+# niet generiek, maar het werkt...
+threeWindowMeasurements <- matrix(0, nrow = 2000, ncol = 2)
 
+for (window in 3:1998){
+  threeWindowMeasurements[window, 1] <- sum(depthMeasurements[(window-2) : window])
+  threeWindowMeasurements[window, 2] <- as.integer(threeWindowMeasurements[window, 1] > threeWindowMeasurements[(window-1), 1])
+}
+
+sum(threeWindowMeasurements[,2]) #levert het goede antwoord op
+
+
+#W.I.P. om het generieker/mooier te maken (lukt nog niet zo goed)
+
+timesLetters <- floor(2000 / 26)
+remainingLetterAmount <- 2000 %% 26 
+
+threeWindowLetters <- rep(letters, each = 3, times = timesLetters)
+threeWindowLetters <- c(threeWindowLetters, rep(letters[1:remainingLetterAmount], each = 3, times = 1))
+
+#vanaf hier verder gaan: 
 threeWindowMeasurementMatrix <- matrix(0, nrow = length(depthMeasurements), ncol = 4)
 
 fillThreeWindowMatrix <- function(winMat){
